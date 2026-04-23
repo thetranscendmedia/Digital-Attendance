@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="futacheckin.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="login-card">
+            <h2>Edit Profile</h2>
+            <form id="edit-form">
+                <input type="text" id="input-name" placeholder="Full Name">
+                <input type="text" id="input-matric" placeholder="Matric Number">
+                <input type="text" id="input-faculty" placeholder="Faculty">
+                <input type="text" id="input-dept" placeholder="Department">
+                <button type="button" id="save-btn" class="submit-button">Save Changes</button>
+            </form>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+       
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsh53VdFAGSchGozezZobbhXrpcYlXG4I",
+            authDomain: "futa-students-attendance.firebaseapp.com",
+            projectId: "futa-students-attendance",
+            storageBucket: "futa-students-attendance.firebasestorage.app",
+            messagingSenderId: "847903496338",
+            appId: "1:847903496338:web:b5dbb709c0474a43c6ae4b"
+        };
+
+        const db = getFirestore(initializeApp(firebaseConfig));
+
+        // Pre-fill inputs
+        document.getElementById('save-btn').addEventListener('click', async () => {
+    
+    console.log("Save button clicked!"); 
+
+    const docId = sessionStorage.getItem("studentDocId");
+    
+    
+    if (!docId) { 
+        console.error("DEBUG: No docId found in sessionStorage!");
+        alert("Error: No session found. Please log in again."); 
+        return; 
+    }
+
+    try {
+        console.log("Attempting to update database for ID: ", docId);
+        
+        const updates = {
+            fullName: document.getElementById('input-name').value,
+            matricNumber: document.getElementById('input-matric').value,
+            faculty: document.getElementById('input-faculty').value,
+            dept: document.getElementById('input-dept').value
+        };
+
+        await updateDoc(doc(db, "students", docId), updates);
+
+        Object.keys(updates).forEach(key => sessionStorage.setItem(key, updates[key]));
+        
+        console.log("Success! Profile updated.");
+        alert("Profile Updated Successfully!");
+        window.location.href = 'index.html';
+        
+    } catch (e) {
+        // 3. MSTARS FIREBASE ERROR TRACKER
+        console.error("DEBUG - Firestore Update Error:", e);
+        alert("Update failed: " + e.message);
+    }
+});
+    </script>
+</body>
+</html>

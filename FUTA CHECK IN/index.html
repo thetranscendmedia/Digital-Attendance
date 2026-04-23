@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Portal</title>
+    <link rel="stylesheet" href="futacheckin.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">STUDENT'S CHECK-IN PORTAL</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="editprofile.html">Edit Profile</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="app-container">
+        <header class="user-header">
+            <div class="avatar-circle">FUTA</div>
+            <div class="user-details">
+                <h1>Welcome, <span id="display-name">...</span></h1>
+                <p>Matric Number: <span id="display-matric">...</span></p>
+            </div>
+        </header>
+
+        <main class="attendance-card">
+            <div class="card-top">
+                <h1>Class Check-in</h1>
+                <p>Course: <span id="display-course">...</span></p>
+            </div>
+
+            <div class="card-body">
+                <div class="input-group">
+                    <label>Enter 6-Digit Code</label>
+                    <input type="text" id="code-input" class="code-field" maxlength="6" placeholder="000000">
+                </div>
+                
+                <p class="timer-display">Code expires in: <span id="countdown">02:00</span></p>
+                
+                <button class="submit-button" onclick="verifyCode()">Confirm Attendance</button>
+
+                <div id="success-box" style="display:none;">
+                    <strong>✓ Attendance Recorded!</strong>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 1. Sync User Data
+        const name = sessionStorage.getItem("studentName");
+        const matric = sessionStorage.getItem("matricNumber");
+        const course = sessionStorage.getItem("courseCode");
+
+        // Redirect if not logged in
+        if (!name) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById("display-name").innerText = name;
+            document.getElementById("display-matric").innerText = matric;
+            document.getElementById("display-course").innerText = course;
+        }
+
+        // 2. Logout Logic
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // 3. Countdown Timer
+        let time = 120;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            countdownEl.innerHTML = `0${minutes}:${seconds}`;
+            if (time <= 0) {
+                clearInterval(timer);
+                countdownEl.innerHTML = "EXPIRED";
+            }
+            time--;
+        }, 1000);
+
+        // 4. Attendance Verification
+        function verifyCode() {
+            const code = document.getElementById('code-input').value;
+            if (code.length === 6) {
+                document.getElementById('success-box').style.display = "block";
+            } else {
+                alert("Please enter a valid 6-digit code.");
+            }
+        }
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2026 The Transcends. All rights reserved.</p>
+        <p>Developed by <strong>Emmstar X The Transcends</strong></p>
+    </footer>
+</body>
+</html>

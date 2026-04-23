@@ -1,0 +1,273 @@
+/* =========================================================
+   1. SHARED STYLES (Applies to all pages)
+   ========================================================= */
+   :root {
+    --deep-purple: #4b0082;
+    --royal-blue: #2563eb;
+    --gradient: linear-gradient(135deg, #4b0082, #2563eb);
+    --bg-color: #f3f4f6;
+    --text-dark: #1f2937;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.navbar {
+    width: 100%;
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* This is the fixed navigation style */
+.nav-links a {
+    text-decoration: none;
+    color: #6b7280;
+    margin: 0 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.nav-links a.active {
+    color: var(--deep-purple);
+    border-bottom: 2px solid var(--deep-purple);
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin-top: auto;
+}
+
+/* =========================================================
+   2. CHECK-IN PAGE STYLES
+   ========================================================= */
+.user-header {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.avatar-circle {
+    width: 45px;
+    height: 45px;
+    background: var(--gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.user-details h2 { font-size: 1rem; color: var(--text-dark); }
+.user-details p { font-size: 0.85rem; color: #6b7280; }
+
+.attendance-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.card-top {
+    background: var(--gradient);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.course-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+.card-body { padding: 30px 20px; text-align: center; }
+
+.code-field {
+    width: 100%;
+    padding: 15px;
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 8px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.timer-display { color: #ef4444; font-weight: bold; margin-bottom: 20px; }
+
+.submit-button {
+    width: 100%;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#success-box { display: none; margin-top: 20px; background: #dcfce7; color: #166534; padding: 15px; border-radius: 10px; }
+
+/* =========================================================
+   3. PROFILE PAGE STYLES
+   ========================================================= */
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.avatar-large {
+    width: 100px;
+    height: 100px;
+    background: var(--gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0 auto 20px auto;
+}
+
+.profile-details h2 { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-dark); }
+
+.info-group {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.info-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.info-group p { font-size: 1rem; color: var(--text-dark); font-weight: 500; }
+
+/* =========================================================
+   4. LOGIN PAGE STYLES
+   ========================================================= */
+.login-page {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h1 {
+    color: var(--deep-purple);
+    margin-bottom: 5px;
+}
+
+.login-header p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--royal-blue);
+}
+/* =========================================================
+   5. EDIT PROFILE PAGE STYLES
+   ========================================================= */
+/* We reuse the login-card style for the edit form box */
+.edit-container {
+    padding-top: 20px;
+    width: 100%;
+}
+
+/* OTHER NAV CSS DDESIGNS*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}

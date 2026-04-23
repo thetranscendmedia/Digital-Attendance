@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Uni Attendance</title>
+    <link rel="stylesheet" href="futacheckin.css">
+</head>
+<body class="login-page">
+
+    <div class="app-container">
+        <main class="login-card">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in with your details</p>
+            </div>
+
+            <form class="login-body">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name-field" placeholder="Enter Full Name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Course Code</label>
+                    <input type="text" id="course-field" placeholder="e.g. CSC 101" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Matric Number</label>
+                    <input type="text" id="matric-field" placeholder="e.g. SCI/2026/001" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="pass-field" placeholder="••••••••" required>
+                </div>
+
+                <button type="button" class="submit-button" id="loginBtn">Login</button>
+            </form>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsh53VdFAGSchGozezZobbhXrpcYlXG4I",
+            authDomain: "futa-students-attendance.firebaseapp.com",
+            projectId: "futa-students-attendance",
+            storageBucket: "futa-students-attendance.firebasestorage.app",
+            messagingSenderId: "847903496338",
+            appId: "1:847903496338:web:b5dbb709c0474a43c6ae4b"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    
+        const btn = document.querySelector('.submit-button');
+    
+        btn.addEventListener('click', async () => {
+            const name = document.getElementById('name-field').value;
+            const matric = document.getElementById('matric-field').value;
+            const password = document.getElementById('pass-field').value;
+            const course = document.getElementById('course-field').value;
+    
+            if (!name || !matric || !password) {
+                alert("Please fill in all fields");
+                return;
+            }
+    
+            try {
+                const studentsRef = collection(db, "students");
+                const q = query(studentsRef, where("matricNumber", "==", matric));
+                const querySnapshot = await getDocs(q);
+    
+                if (querySnapshot.empty) {
+                    // Register new student
+                    const docRef = await addDoc(studentsRef, {
+                        fullName: name,
+                        matricNumber: matric,
+                        courseCode: course,
+                        password: password
+                    });
+                    
+                    sessionStorage.setItem("studentDocId", docRef.id);
+                    sessionStorage.setItem("studentName", name);
+                    sessionStorage.setItem("matricNumber", matric);
+                    sessionStorage.setItem("courseCode", course);
+                    
+                    alert("Account created successfully!");
+                    window.location.href = 'index.html';
+                } else {
+                    // Login existing student
+                    const docSnap = querySnapshot.docs[0];
+                    const studentData = docSnap.data();
+                    
+                    if (studentData.password === password) {
+                      // Inside your login/register success block:
+                      if (querySnapshot.empty) {
+    // NEW USER: Default values for missing fields
+    const docRef = await addDoc(studentsRef, {
+        fullName: name,
+        matricNumber: matric,
+        courseCode: course,
+        password: password,
+        faculty: "Not Set", // Default
+        dept: "Not Set"     // Default
+    });
+
+    sessionStorage.setItem("studentDocId", docRef.id);
+    sessionStorage.setItem("studentName", name);
+    sessionStorage.setItem("matricNumber", matric);
+    sessionStorage.setItem("courseCode", course);
+    sessionStorage.setItem("faculty", "Not Set");
+    sessionStorage.setItem("dept", "Not Set");
+
+    alert("Account created successfully!");
+    window.location.href = 'index.html';
+
+} else {
+    // EXISTING USER: Pull existing data from database
+    const docSnap = querySnapshot.docs[0];
+    const studentData = docSnap.data();
+
+    if (studentData.password === password) {
+        sessionStorage.setItem("studentDocId", docSnap.id);
+        sessionStorage.setItem("studentName", studentData.fullName);
+        sessionStorage.setItem("matricNumber", studentData.matricNumber);
+        sessionStorage.setItem("courseCode", studentData.courseCode);
+        
+        // Use ?? "Not Set" to prevent "undefined" errors if field is missing
+        sessionStorage.setItem("faculty", studentData.faculty ?? "Not Set");
+        sessionStorage.setItem("dept", studentData.dept ?? "Not Set");
+
+        alert("Login successful!");
+        window.location.href = 'index.html';
+    } else {
+        alert("Incorrect password!");
+    }
+}
+                    }
+                }
+            } catch (e) {
+                console.error("Database Error: ", e);
+                alert("Database Error: " + e.message);
+            }
+        });
+    </script>
+</body>
+</html>
