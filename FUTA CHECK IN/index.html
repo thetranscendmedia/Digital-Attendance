@@ -40,66 +40,109 @@
                 
                 <p class="timer-display">Code expires in: <span id="countdown">02:00</span></p>
                 
-                <button class="submit-button" onclick="verifyCode()">Confirm Attendance</button>
+                <button class="submit-button" id="checkin-btn">Confirm Attendance</button>
 
-                <div id="success-box" style="display:none;">
-                    <strong>✓ Attendance Recorded!</strong>
+                <div id="success-box" style="display:none; margin-top: 20px; color: green; font-weight: bold;">
+                    <strong>✓ Attendance Recorded Successfully!</strong>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        // 1. Sync User Data
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, addDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const db = getFirestore(initializeApp({
+            apiKey: "AIzaSyCsh53VdFAGSchGozezZobbhXrpcYlXG4I",
+            authDomain: "futa-students-attendance.firebaseapp.com",
+            projectId: "futa-students-attendance",
+            storageBucket: "futa-students-attendance.firebasestorage.app",
+            messagingSenderId: "847903496338",
+            appId: "1:847903496338:web:b5dbb709c0474a43c6ae4b"
+        }));
+
+        // 1. Load User Data
         const name = sessionStorage.getItem("studentName");
         const matric = sessionStorage.getItem("matricNumber");
-        const course = sessionStorage.getItem("courseCode");
+        const rawCourse = sessionStorage.getItem("courseCode");
+        const cleanCourse = rawCourse ? rawCourse.replace(/\s+/g, '').toUpperCase() : "";
 
-        // Redirect if not logged in
         if (!name) {
             window.location.href = 'login.html';
         } else {
             document.getElementById("display-name").innerText = name;
             document.getElementById("display-matric").innerText = matric;
-            document.getElementById("display-course").innerText = course;
+            document.getElementById("display-course").innerText = rawCourse;
         }
 
-        // 2. Logout Logic
+        // 2. Attendance Verification Logic
+        document.getElementById('checkin-btn').addEventListener('click', async () => {
+            const studentCode = document.getElementById('code-input').value;
+            
+            try {
+                const codeSnap = await getDoc(doc(db, "active_sessions", cleanCourse));
+                
+                if (!codeSnap.exists()) {
+                    alert(`No active session for ${rawCourse}. Please wait for the lecturer.`);
+                    return;
+                }
+                
+                const data = codeSnap.data();
+                
+                // EXPIRATION CHECK: 120,000ms = 2 minutes
+                if ((Date.now() - data.createdAt) > 120000) {
+                    alert("This session has expired! Please ask your lecturer to generate a new code.");
+                    return;
+                }
+
+                if (studentCode === data.code) {
+                    const q = query(collection(db, "checked_in_students"), 
+                                    where("matric", "==", matric), 
+                                    where("course", "==", rawCourse));
+                    const check = await getDocs(q);
+
+                    if (!check.empty) {
+                        alert("You have already checked in for this course!");
+                    } else {
+                        await addDoc(collection(db, "checked_in_students"), {
+                            name: name,
+                            matric: matric,
+                            course: rawCourse,
+                            timestamp: new Date().toLocaleString()
+                        });
+                        document.getElementById('success-box').style.display = "block";
+                    }
+                } else {
+                    alert(`Invalid Code for ${rawCourse}!`);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Server error. Please check your connection.");
+            }
+        });
+
+        // 3. Logout
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             sessionStorage.clear();
             window.location.href = 'login.html';
         });
 
-        // 3. Countdown Timer
+        // 4. Timer (Visual only)
         let time = 120;
         const countdownEl = document.getElementById('countdown');
         const timer = setInterval(() => {
-            let minutes = Math.floor(time / 60);
-            let seconds = time % 60;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            countdownEl.innerHTML = `0${minutes}:${seconds}`;
-            if (time <= 0) {
-                clearInterval(timer);
-                countdownEl.innerHTML = "EXPIRED";
-            }
-            time--;
-        }, 1000);
-
-        // 4. Attendance Verification
-        function verifyCode() {
-            const code = document.getElementById('code-input').value;
-            if (code.length === 6) {
-                document.getElementById('success-box').style.display = "block";
+            if (time > 0) {
+                time--;
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                countdownEl.innerHTML = `0${m}:${s < 10 ? '0'+s : s}`;
             } else {
-                alert("Please enter a valid 6-digit code.");
+                countdownEl.innerHTML = "EXPIRED";
+                clearInterval(timer);
             }
-        }
+        }, 1000);
     </script>
-
-    <footer class="footer">
-        <p>&copy; 2026 The Transcends. All rights reserved.</p>
-        <p>Developed by <strong>Emmstar X The Transcends</strong></p>
-    </footer>
 </body>
 </html>
