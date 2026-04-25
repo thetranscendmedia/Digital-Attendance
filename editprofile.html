@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | Futa Hub</title>
+    <link rel="stylesheet" href="futacheckin.css">
+    <link rel="stylesheet" href="editprofile.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="login-card">
+            <div class="login-header">
+                <h1>Edit Profile</h1>
+                <p>Update your information for the university portal.</p>
+            </div>
+            
+            <form id="edit-form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="input-name" class="input-field" placeholder="Enter full name">
+                </div>
+                <div class="input-group">
+                    <label>Matric Number</label>
+                    <input type="text" id="input-matric" class="input-field" placeholder="e.g. FTS/25/0000">
+                </div>
+                <div class="input-group">
+                    <label>Faculty</label>
+                    <input type="text" id="input-faculty" class="input-field" placeholder="e.g. Science">
+                </div>
+                <div class="input-group">
+                    <label>Department</label>
+                    <input type="text" id="input-dept" class="input-field" placeholder="e.g. Computer Science">
+                </div>
+                
+                <button type="button" id="save-btn" class="submit-button">Save Changes</button>
+            </form>
+        </main>
+    </div>
+
+    <!-- <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsh53VdFAGSchGozezZobbhXrpcYlXG4I",
+            authDomain: "futa-students-attendance.firebaseapp.com",
+            projectId: "futa-students-attendance",
+            storageBucket: "futa-students-attendance.firebasestorage.app",
+            messagingSenderId: "847903496338",
+            appId: "1:847903496338:web:b5dbb709c0474a43c6ae4b"
+        };
+
+        const db = getFirestore(initializeApp(firebaseConfig));
+
+        // 1. SESSION DIAGNOSTIC & PRE-FILL
+        // We use localStorage here so it doesn't expire when you refresh
+        const docId = localStorage.getItem("studentDocId");
+
+        console.log("DEBUG: Current studentDocId in Storage:", docId);
+
+        if (!docId || docId === "null" || docId === "undefined") {
+            alert("Session expired. Please log in again.");
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('input-name').value = localStorage.getItem("fullName") || "";
+            document.getElementById('input-matric').value = localStorage.getItem("matricNumber") || "";
+            document.getElementById('input-faculty').value = localStorage.getItem("faculty") || "";
+            document.getElementById('input-dept').value = localStorage.getItem("dept") || "";
+        }
+
+        // 2. SAVE LOGIC
+        document.getElementById('save-btn').addEventListener('click', async () => {
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.innerText = "Saving...";
+            saveBtn.disabled = true;
+
+            const updates = {
+                fullName: document.getElementById('input-name').value,
+                matricNumber: document.getElementById('input-matric').value,
+                faculty: document.getElementById('input-faculty').value,
+                dept: document.getElementById('input-dept').value
+            };
+
+            try {
+                await updateDoc(doc(db, "students", docId), updates);
+                
+                // Sync LocalStorage
+                Object.keys(updates).forEach(key => localStorage.setItem(key, updates[key]));
+                
+                alert("Profile Updated Successfully!");
+                window.location.href = 'index.html';
+            } catch (e) {
+                console.error("Firestore Update Error:", e);
+                alert("Failed to update profile: " + e.message);
+                saveBtn.innerText = "Save Changes";
+                saveBtn.disabled = false;
+            }
+        });
+    </script> -->
+</body>
+</html>

@@ -1,0 +1,33 @@
+/* =========================================================
+   1. SHARED STYLES (Applies to all pages)
+   ========================================================= */
+   :root {
+    --deep-purple: #4b0082;
+    --royal-blue: #2563eb;
+    --gradient: linear-gradient(135deg, #4b0082, #2563eb);
+    --bg-color: #f3f4f6;
+    --text-dark: #1f2937;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    /* min-height: 100vh; */
+    align-items: center;
+    
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+    flex: 1;
+}
