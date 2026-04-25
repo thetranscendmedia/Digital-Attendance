@@ -1,0 +1,66 @@
+/* =========================================================
+   5. EDIT PROFILE PAGE STYLES
+   ========================================================= */
+/* We reuse the login-card style for the edit form box */
+.edit-container {
+    padding-top: 20px;
+    width: 100%;
+}
+
+/* OTHER NAV CSS DDESIGNS*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* PRINT SECTION*/ 
+@media print {
+    /* Hide the interface elements */
+    .navbar, .admin-card button, .no-print {
+        display: none !important;
+    }
+
+    /* Make the table fill the page */
+    .admin-card {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 10px;
+    }
+}
+
+.code-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+

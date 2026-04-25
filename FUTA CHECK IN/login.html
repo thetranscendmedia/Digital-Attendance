@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Uni Attendance</title>
     <link rel="stylesheet" href="futacheckin.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body class="login-page">
 
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
     <div class="app-container">
         <main class="login-card">
+            <img src="./IMAGES/futalogo.png" alt="FUTA Logo" class="logo images"/>
             <div class="login-header">
                 <h1>Welcome Back</h1>
                 <p>Sign in with your details</p>
@@ -37,7 +52,7 @@
         </main>
     </div>
 
-    <script type="module">
+    <!-- <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     
@@ -113,7 +128,7 @@
                 console.error("Error: ", e);
                 alert("Database Error: " + e.message);
             }
-        });
+        }); -->
     </script>
 </body>
 </html>
