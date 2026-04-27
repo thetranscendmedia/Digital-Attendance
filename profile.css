@@ -1,45 +1,28 @@
-/* =========================================================
-   3. PROFILE PAGE STYLES
-   ========================================================= */
-.profile-card {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    text-align: center;
-}
+body { padding: 0 24px 40px; }
 
+.profile-card { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.profile-pic-container { display: flex; justify-content: center; }
 .avatar-large {
-    width: 100px;
-    height: 100px;
-    background: var(--gradient);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0 auto 20px auto;
+    width: 88px; height: 88px;
+    background: linear-gradient(135deg, #7c83d6, #64b5d6);
+    color: white; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1.4rem; letter-spacing: 0.05em;
+    box-shadow: 0 10px 28px rgba(124,131,214,0.4);
+    animation: avatarPop 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
 }
-
-.profile-details h2 { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-dark); }
+.profile-details { width: 100%; display: flex; flex-direction: column; gap: 2px; }
+.profile-details h2 { font-size: 1.2rem; font-weight: 600; color: #1e1e2e; text-align: center; letter-spacing: -0.02em; margin-bottom: 16px; }
 
 .info-group {
-    background: #f9fafb;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    text-align: left;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 14px; padding: 12px 16px; margin-bottom: 10px;
+    animation: fieldIn 0.4s both;
 }
+.info-group:nth-child(2) { animation-delay: 0.15s; }
+.info-group:nth-child(3) { animation-delay: 0.25s; }
+.info-group:nth-child(4) { animation-delay: 0.35s; }
 
-.info-group label {
-    display: block;
-    font-size: 0.75rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.info-group p { font-size: 1rem; color: var(--text-dark); font-weight: 500; }
+.info-group label { display: block; font-size: 0.7rem; font-weight: 500; color: #4a4f66; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.info-group p { font-size: 0.92rem; font-weight: 500; color: #1e1e2e; }

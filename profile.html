@@ -9,37 +9,65 @@
 </head>
 <body>
 
-    <nav class="navbar">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="header">
+
+        <img src="./IMAGES/futalogo.png" alt="Futa Logo" class="logo">
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="index.html">Check-in</a>
-            <a href="profile.html" class="active">Profile</a>
-            <a href="login.html" id="auth-btn">Login</a>
+            <a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></a>
+            <a href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-check-icon lucide-map-pin-check"><path d="M19.43 12.935c.357-.967.57-1.955.57-2.935a8 8 0 0 0-16 0c0 4.993 5.539 10.193 7.399 11.799a1 1 0 0 0 1.202 0 32.197 32.197 0 0 0 .813-.728"/><circle cx="12" cy="10" r="3"/><path d="m16 18 2 2 4-4"/></svg></a>
+            <a href="profile.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></a>
+            <a href="login.html" id="auth-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg></a>
         </div>
-    </nav>
+    </div>
 
-    <div class="app-container">
-        <main class="profile-card">
-            <div class="profile-pic-container">
-                <div class="avatar-large"><IMG:srcset>JJ</IMG:srcset></div>
-            </div>
+    <div class="page-card">
+        <div class="app-container">
+            <main class="profile-card">
+                <div class="profile-pic-container">
+                    <div class="avatar-large"><IMG:srcset>JJ</IMG:srcset></div>
+                </div>
 
-            <div class="profile-details">
-                <h2><span id="display-name">Guest</span></h2>
-                
-                <div class="info-group">
-                    <label>Matric Number</label>
-                    <p><span id="display-matric">N/A</span></p>
+                <div class="profile-details">
+                    <h2><span id="display-name">Guest</span></h2>
+                    
+                    <div class="info-group">
+                        <label>Matric Number</label>
+                        <p><span id="display-matric">N/A</span></p>
+                    </div>
+                    <div class="info-group">
+                        <label>Faculty</label>
+                        <p><span id="display-faculty">N/A</span></p>
+                    </div>
+                    <div class="info-group">
+                        <label>Department</label>
+                        <p><span id="display-dept">N/A</span></p>
+                    </div>
                 </div>
-                <div class="info-group">
-                    <label>Faculty</label>
-                    <p><span id="display-faculty">N/A</span></p>
-                </div>
-                <div class="info-group">
-                    <label>Department</label>
-                    <p><span id="display-dept">N/A</span></p>
-                </div>
-            </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 The Transcends. All rights reserved.</p>
+        <p>Developed by <strong>Emmstar X The Transcends</strong></p>
+    </footer>
             
             <script>
                 window.onload = function() {
@@ -51,19 +79,16 @@
                 };
 
                 // This runs on every page load to keep data synced
-    const name = sessionStorage.getItem("studentName");
-    const matric = sessionStorage.getItem("matricNumber");
-    const course = sessionStorage.getItem("courseCode");
+                const name = sessionStorage.getItem("studentName");
+                const matric = sessionStorage.getItem("matricNumber");
+                const course = sessionStorage.getItem("courseCode");
 
-    if (name) {
-       
-        if(document.getElementById("display-name")) document.getElementById("display-name").innerText = name;
-        if(document.getElementById("display-matric")) document.getElementById("display-matric").innerText = matric;
-        if(document.getElementById("display-course")) document.getElementById("display-course").innerText = course;
-    }
+                if (name) {
+                
+                    if(document.getElementById("display-name")) document.getElementById("display-name").innerText = name;
+                    if(document.getElementById("display-matric")) document.getElementById("display-matric").innerText = matric;
+                    if(document.getElementById("display-course")) document.getElementById("display-course").innerText = course;
+                }
             </script>
-            <footer class="footer">
-                <p>&copy; 2026 The Transcends. All rights reserved.</p>
-                <p>Developed by <strong>Emmstar X The Transcends</strong></p>
-            </footer>
-            </html>
+</body>
+</html>           

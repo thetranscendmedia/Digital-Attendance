@@ -1,238 +1,36 @@
-/* =========================================================
-   LOGIN PAGE — GLASSMORPHISM
-   ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-
-.logo {
-    display: flex;
-    align-content: center;
-}
-
 .login-page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;      /* overrides body's column direction */
     justify-content: center;
     align-items: center;
-    font-family: 'Inter', sans-serif;
-    background: #d4d8e2;
-    position: relative;
+    flex-direction: row;
     overflow: hidden;
-}
-
-.blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.45;
-    animation: blobDrift 14s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: 0;
-}
-.blob-1 { width: 420px; height: 420px; background: #7c83d6; top: -100px; left: -80px; animation-delay: 0s; }
-.blob-2 { width: 340px; height: 340px; background: #64b5d6; bottom: -80px; right: -60px; animation-delay: -5s; }
-.blob-3 { width: 260px; height: 260px; background: #a89bd4; top: 45%; left: 58%; animation-delay: -9s; }
-
-@keyframes blobDrift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(25px, 35px) scale(1.07); }
-}
-
-.app-container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    animation: fadeIn 0.8s ease-out forwards; /* 0.8s duration, smooth easing */
-    opacity: 0; /* Start hidden */
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px); /* Optional: slight slide up effect */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(24px) scale(0.98); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .login-card {
     width: 100%;
-    background: rgba(255, 255, 255, 0.38);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255,255,255,0.38);
+    border: 1px solid rgba(255,255,255,0.6);
     border-radius: 24px;
     padding: 44px 38px;
     backdrop-filter: blur(40px) saturate(160%);
     -webkit-backdrop-filter: blur(40px) saturate(160%);
-    box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.7) inset,
-        0 24px 56px rgba(100, 110, 160, 0.18);
+    box-shadow: 0 0 0 0.5px rgba(255,255,255,0.7) inset, 0 24px 56px rgba(100,110,160,0.18);
     position: relative;
     overflow: hidden;
 }
-
 .login-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+    content: ''; position: absolute;
+    top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
     border-radius: 99px;
 }
+.login-header { margin-bottom: 30px; }
+.login-header h1 { font-size: 1.55rem; font-weight: 600; color: #1e1e2e; letter-spacing: -0.025em; margin-bottom: 5px; }
+.login-header p { font-size: 0.85rem; color: #6b7080; }
 
-.login-header {
-    margin-bottom: 30px;
-}
-
-.login-header h1 {
-    font-size: 1.55rem;
-    font-weight: 600;
-    color: #1e1e2e;
-    letter-spacing: -0.025em;
-    margin-bottom: 5px;
-}
-
-.login-header p {
-    font-size: 0.85rem;
-    color: #6b7080;
-    font-weight: 400;
-}
-
-.input-group {
-    margin-bottom: 14px;
-}
-
-.input-group label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #4a4f66;
-    margin-bottom: 7px;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    color: #2c2f45;
-    background: rgba(255, 255, 255, 0.45);
-    outline: none;
-    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-    -webkit-appearance: none;
-}
-
-.input-group input::placeholder {
-    color: #a0a5bc;
-}
-
-.input-group input:hover {
-    background: rgba(255, 255, 255, 0.58);
-    border-color: rgba(255, 255, 255, 0.75);
-}
-
-.input-group input:focus {
-    background: rgba(255, 255, 255, 0.65);
-    border-color: rgba(124, 131, 214, 0.7);
-    box-shadow: 0 0 0 3px rgba(124, 131, 214, 0.15);
-}
-
-.submit-button {
-    margin-top: 10px;
-    width: 100%;
-    padding: 13px;
-    border: 1px solid rgba(124, 131, 214, 0.4);
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #ffffff;
-    background: var(--royal-blue);
-    cursor: pointer;
-    letter-spacing: -0.01em;
-    backdrop-filter: blur(10px);
-    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.submit-button::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
-    pointer-events: none;
-    border-radius: 12px;
-}
-
-.submit-button:hover {
-    background: rgba(124, 131, 214, 0.75);
-    border-color: rgba(124, 131, 214, 0.5);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(124, 131, 214, 0.3);
-}
-
-.submit-button:active {
-    transform: scale(0.99);
-    background: rgba(124, 131, 214, 0.65);
-}
-
-.bubble {
-    position: absolute;
-    bottom: -100px;
-    animation: bubbleRise linear infinite;
-
-    background:
-        radial-gradient(circle at 30% 28%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.04) 40%, transparent 65%),
-        conic-gradient(from 180deg,
-            rgba(255, 100, 130, 0.10),
-            rgba(255, 200,  80, 0.08),
-            rgba(100, 220, 160, 0.07),
-            rgba(80,  180, 255, 0.09),
-            rgba(180, 100, 255, 0.08),
-            rgba(255, 100, 180, 0.07),
-            rgba(255, 100, 130, 0.10)
-        );
-
-    border: 1px solid rgba(255,255,255,0.55);
-    box-shadow:
-        inset 0 0 6px 1px rgba(255,255,255,0.2),
-        0 0 4px 1px rgba(200,180,255,0.12),
-        0 0 0 0.5px rgba(255,255,255,0.25);
-}
-
-/* Slightly off-round, not distorted */
-.bubble:nth-child(1)  { width: 52px; height: 54px; left: 5%;  animation-duration: 11s; animation-delay: 0s;   border-radius: 51% 49% 52% 48% / 48% 52% 50% 50%; }
-.bubble:nth-child(2)  { width: 28px; height: 26px; left: 15%; animation-duration: 14s; animation-delay: 2s;   border-radius: 50% 50% 52% 48% / 52% 48% 50% 50%; }
-.bubble:nth-child(3)  { width: 68px; height: 64px; left: 26%; animation-duration: 13s; animation-delay: 0.5s; border-radius: 48% 52% 50% 50% / 52% 48% 51% 49%; }
-.bubble:nth-child(4)  { width: 36px; height: 38px; left: 38%; animation-duration: 10s; animation-delay: 3s;   border-radius: 52% 48% 50% 50% / 49% 51% 52% 48%; }
-.bubble:nth-child(5)  { width: 22px; height: 24px; left: 50%; animation-duration: 15s; animation-delay: 1s;   border-radius: 49% 51% 52% 48% / 51% 49% 50% 50%; }
-.bubble:nth-child(6)  { width: 58px; height: 62px; left: 60%; animation-duration: 12s; animation-delay: 4s;   border-radius: 50% 50% 48% 52% / 52% 48% 51% 49%; }
-.bubble:nth-child(7)  { width: 34px; height: 30px; left: 70%; animation-duration: 9s;  animation-delay: 1.5s; border-radius: 52% 48% 51% 49% / 48% 52% 50% 50%; }
-.bubble:nth-child(8)  { width: 46px; height: 50px; left: 80%; animation-duration: 13s; animation-delay: 2.5s; border-radius: 50% 50% 52% 48% / 51% 49% 48% 52%; }
-.bubble:nth-child(9)  { width: 20px; height: 22px; left: 88%; animation-duration: 11s; animation-delay: 5s;   border-radius: 48% 52% 50% 50% / 50% 50% 52% 48%; }
-.bubble:nth-child(10) { width: 62px; height: 58px; left: 91%; animation-duration: 16s; animation-delay: 3.5s; border-radius: 51% 49% 48% 52% / 49% 51% 52% 48%; }
-.bubble:nth-child(11) { width: 30px; height: 32px; left: 43%; animation-duration: 12s; animation-delay: 6s;   border-radius: 49% 51% 52% 48% / 52% 48% 49% 51%; }
-.bubble:nth-child(12) { width: 44px; height: 46px; left: 8%;  animation-duration: 10s; animation-delay: 7s;   border-radius: 52% 48% 50% 50% / 48% 52% 51% 49%; }
-
-@keyframes bubbleRise {
-    0%   { transform: translateY(0)      translateX(0px);  opacity: 0; }
-    8%   { opacity: 0.85; }
-    50%  { transform: translateY(-320px) translateX(10px); }
-    90%  { opacity: 0.6; }
-    100% { transform: translateY(-680px) translateX(-6px); opacity: 0; }
+.app-container {
+    position: relative; z-index: 1;
+    width: 100%; display: flex;
+    justify-content: center;
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
 }
