@@ -1,0 +1,222 @@
+/* =========================================================
+   ADMIN PAGE — admin.css
+   ========================================================= */
+
+body {
+    padding: 0 24px 40px;
+    justify-content: flex-start;
+}
+
+/* Faded logo watermark in background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    height: 340px;
+    background: url('./IMAGES/futalogo.png') center/contain no-repeat;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 860px;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-top: none;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    box-shadow: 0 4px 20px rgba(100,110,160,0.12);
+    border-radius: 0 0 20px 20px;
+}
+
+.navbar .logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a4f66;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Admin badge on the navbar title */
+.navbar .logo::before {
+    content: 'ADMIN';
+    background: rgba(124,131,214,0.2);
+    border: 1px solid rgba(124,131,214,0.4);
+    color: #7c83d6;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.navbar button {
+    padding: 8px 16px;
+    background: rgba(124,131,214,0.75);
+    border: 1px solid rgba(124,131,214,0.4);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.navbar button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(124,131,214,0.3); }
+.navbar button:active { transform: scale(0.99); }
+
+/* APP CONTAINER */
+.app-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 !important;
+}
+
+/* ADMIN CARDS */
+.admin-card {
+    position: relative;
+    background: rgba(255,255,255,0.38);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(40px) saturate(160%);
+    -webkit-backdrop-filter: blur(40px) saturate(160%);
+    box-shadow: 0 0 0 0.5px rgba(255,255,255,0.7) inset, 0 24px 56px rgba(100,110,160,0.18);
+    animation: cardIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+    overflow: hidden;
+}
+
+/* Top gloss line on each card */
+.admin-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+    border-radius: 99px; z-index: 2;
+}
+
+.admin-card:nth-child(2) { animation-delay: 0.1s; }
+
+.admin-card h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a4f66;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+/* SELECT DROPDOWN */
+#course-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: #2c2f45;
+    background: rgba(255,255,255,0.45);
+    outline: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+#course-select:focus { background: rgba(255,255,255,0.65); border-color: rgba(255,255,255,0.55); box-shadow: none; outline: none; }
+
+/* ACTIVE CODE DISPLAY */
+#active-code {
+    font-size: 3rem !important;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin-top: 16px;
+    background: linear-gradient(135deg, #7c83d6, #64b5d6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: codePop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes codePop {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 0.85rem;
+}
+
+th {
+    background: rgba(124,131,214,0.15);
+    color: #4a4f66;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+td {
+    padding: 11px 14px;
+    color: #2c2f45;
+    border-bottom: 1px solid rgba(255,255,255,0.35);
+    font-weight: 400;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td {
+    background: rgba(255,255,255,0.25);
+}
+
+/* REFRESH BUTTON */
+.admin-card button:not(.submit-button) {
+    padding: 9px 18px;
+    background: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #4a4f66;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-bottom: 4px;
+}
+.admin-card button:not(.submit-button):hover {
+    background: rgba(255,255,255,0.55);
+    transform: translateY(-1px);
+}
