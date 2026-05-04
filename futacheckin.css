@@ -219,7 +219,7 @@ body {
    ========================================================= */
 .submit-button {
     width: 100%; padding: 13px;
-    background: rgba(124,131,214,0.75);
+    background: rgb(2, 20, 212);
     border: 1px solid rgba(124,131,214,0.4);
     border-radius: 12px; color: white;
     font-family: 'Inter', sans-serif;
