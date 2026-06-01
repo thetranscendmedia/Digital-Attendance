@@ -10,6 +10,28 @@
         @media print { .no-print { display: none !important; } }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        
+        /* Red color scheme for the dangerous action button */
+        .clear-button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.2s;
+        }
+        .clear-button:hover {
+            background: #b91c1c;
+        }
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -34,8 +56,13 @@
         </div>
 
         <div class="admin-card">
-            <h2>Live Attendance List</h2>
-            <button onclick="fetchAttendance()" class="no-print">Refresh List</button>
+            <div class="action-bar">
+                <h2>Live Attendance List</h2>
+                <div class="no-print">
+                    <button onclick="fetchAttendance()" class="submit-button" style="width: auto; display: inline-block; padding: 8px 15px;">Refresh List</button>
+                    <button id="clear-btn" class="clear-button">Clear Attendance</button>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -52,7 +79,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, deleteDoc, collection, query, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
         const db = getFirestore(initializeApp({
             apiKey: "AIzaSyCsh53VdFAGSchGozezZobbhXrpcYlXG4I",
@@ -65,15 +92,16 @@
 
         if (sessionStorage.getItem("userRole") !== "lecturer") window.location.href = "login.html";
 
+        // Expose fetchAttendance to the global scope so inline button onclick attributes can see it
+        window.fetchAttendance = fetchAttendance;
+
         // GENERATE CODE WITH 2-MINUTE EXPIRATION TIMESTAMP
         document.getElementById('generate-btn').addEventListener('click', async () => {
             const rawCourse = document.getElementById('course-select').value;
-            // Standardize ID: CSC 101 -> CSC101
             const cleanCourse = rawCourse.replace(/\s+/g, '').toUpperCase();
             
             const newCode = Math.floor(100000 + Math.random() * 900000).toString();
             
-            // Save code AND current timestamp
             await setDoc(doc(db, "active_sessions", cleanCourse), { 
                 code: newCode,
                 createdAt: Date.now() 
@@ -97,8 +125,46 @@
             });
         }
 
+        // CLEAR ATTENDANCE FOR SELECTED COURSE
+        document.getElementById('clear-btn').addEventListener('click', async () => {
+            const selectedCourse = document.getElementById('course-select').value;
+            const cleanCourse = selectedCourse.replace(/\s+/g, '').toUpperCase();
+            
+            const confirmation = confirm(`Are you sure you want to permanently delete today's attendance data for ${selectedCourse}? This action cannot be undone.`);
+            
+            if (!confirmation) return;
+
+            try {
+                // 1. Remove active temporary session entry
+                await deleteDoc(doc(db, "active_sessions", cleanCourse));
+                document.getElementById('active-code').innerText = "---";
+
+                // 2. Query all checked-in items matching this course
+                const q = query(collection(db, "checked_in_students"), where("course", "==", selectedCourse));
+                const snapshot = await getDocs(q);
+
+                if (!snapshot.empty) {
+                    const batch = writeBatch(db);
+                    snapshot.forEach((studentDoc) => {
+                        batch.delete(studentDoc.ref);
+                    });
+                    // Commit structural batch removal
+                    await batch.commit();
+                }
+
+                alert(`Attendance roster successfully cleared for ${selectedCourse}.`);
+                fetchAttendance(); // Re-render table UI layout
+            } catch (error) {
+                console.error("Error clearing logs: ", error);
+                alert("An error occurred while wiping database collections.");
+            }
+        });
+
         document.getElementById('course-select').addEventListener('change', fetchAttendance);
         setInterval(fetchAttendance, 10000);
+        
+        // Initial invocation to populate tables on fresh views
+        fetchAttendance();
     </script>
 </body>
 </html>
