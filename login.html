@@ -75,7 +75,7 @@
     
             // 1. ADMIN BYPASS
             if (name === "ADMINCSC101" && password === "198611") {
-                sessionStorage.setItem("userRole", "lecturer");
+                localStorage.setItem("userRole", "lecturer");
                 window.location.href = "admin.html";
                 return;
             }
@@ -99,9 +99,13 @@
                         password: password
                     });
                     
-                    sessionStorage.setItem("studentName", name);
-                    sessionStorage.setItem("matricNumber", matric);
-                    sessionStorage.setItem("courseCode", course);
+                    // Save fields along with the new document ID to localStorage
+                    localStorage.setItem("studentDocId", docRef.id);
+                    localStorage.setItem("fullName", name);
+                    localStorage.setItem("matricNumber", matric);
+                    localStorage.setItem("courseCode", course);
+
+                    alert("Registration successful!");
                     window.location.href = 'index.html';
                 } else {
                     // LOGIN EXISTING STUDENT
@@ -114,9 +118,13 @@
                             await updateDoc(doc(db, "students", docSnap.id), { courseCode: course });
                         }
     
-                        sessionStorage.setItem("studentName", studentData.fullName);
-                        sessionStorage.setItem("matricNumber", studentData.matricNumber);
-                        sessionStorage.setItem("courseCode", course);
+                        // Save fields along with the existing document ID to localStorage
+                        localStorage.setItem("studentDocId", docSnap.id);
+                        localStorage.setItem("fullName", studentData.fullName);
+                        localStorage.setItem("matricNumber", studentData.matricNumber);
+                        localStorage.setItem("courseCode", course);
+                        localStorage.setItem("faculty", studentData.faculty || "");
+                        localStorage.setItem("dept", studentData.dept || "");
     
                         alert("Login successful!");
                         window.location.href = 'index.html';
